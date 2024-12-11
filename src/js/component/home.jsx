@@ -1,24 +1,60 @@
-import React from "react";
+import React, {useState} from "react";
+import "/src/styles/index.css";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
-//create your first component
 const Home = () => {
+
+	const [tareas, setTareas] = useState([
+		{ text: "Prepare the class", completed: false },
+		{ text: "Study Javascript", completed: false },
+		{ text: "Clean my room", completed: false},
+		{ text: "Do some workout", completed: false}
+	  ]);
+	const [newTareas, setNewTareas] = useState("");
+
+	const addTareas = () => {
+		if(newTareas.trim() != "") {
+			setTareas([...tareas, {text: newTareas, completed: false}]);
+			setNewTareas("");
+		};
+	};
+
+	const toggleComplete = (index) => {
+		const updatedTasks = [...tareas];
+		updatedTasks[index].completed = !updatedTasks[index].completed;
+		setTareas(updatedTasks);
+	  };
+
+	const removeTarea = (indexToRemove) => {
+		setTareas(tareas.filter((_, index) => index !== indexToRemove));
+	  };
+
 	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+		<div className="body">
+			<h1>TO DO LIST!!</h1>
+			<div className="list-container">
+				<ul>
+					<input
+					type="text"
+					placeholder="Add a new task"
+					value={newTareas}
+					onChange={(e) => setNewTareas(e.target.value)}
+					/>
+					<button onClick={addTareas}>Add Task</button>
+					{tareas.map((tarea, index) => (
+					<li key={index}>
+						<input
+						type="checkbox"
+						checked={tarea.completed}
+						onChange={() => toggleComplete(index)}
+						/>
+						<span className={tarea.completed ? "completed" : ""}>
+						{tarea.text}
+						</span>
+						<button className="delete-button" onClick={() => removeTarea(index)}>X</button>
+					</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	);
 };
