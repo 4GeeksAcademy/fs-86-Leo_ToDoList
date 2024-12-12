@@ -3,29 +3,29 @@ import "/src/styles/index.css";
 
 const Home = () => {
 
-	const [tareas, setTareas] = useState([
+	const [tasks, setTasks] = useState([
 		{ text: "Prepare the class", completed: false },
 		{ text: "Study Javascript", completed: false },
 		{ text: "Clean my room", completed: false},
 		{ text: "Do some workout", completed: false}
 	  ]);
-	const [newTareas, setNewTareas] = useState("");
+	const [newTasks, setNewTasks] = useState("");
 
-	const addTareas = () => {
-		if(newTareas.trim() != "") {
-			setTareas([...tareas, {text: newTareas, completed: false}]);
-			setNewTareas("");
+	const addTasks = () => {
+		if(newTasks.trim() !== "") {
+			setTasks([...tasks, {text: newTasks, completed: false}]);
+			setNewTasks("");
 		};
 	};
 
 	const toggleComplete = (index) => {
-		const updatedTasks = [...tareas];
+		const updatedTasks = [...tasks];
 		updatedTasks[index].completed = !updatedTasks[index].completed;
-		setTareas(updatedTasks);
+		setTasks(updatedTasks);
 	  };
 
 	const removeTarea = (indexToRemove) => {
-		setTareas(tareas.filter((_, index) => index !== indexToRemove));
+		setTasks(tasks.filter((_, index) => index !== indexToRemove));
 	  };
 
 	return (
@@ -36,24 +36,25 @@ const Home = () => {
 					<input
 					type="text"
 					placeholder="Add a new task"
-					value={newTareas}
-					onChange={(e) => setNewTareas(e.target.value)}
+					value={newTasks}
+					onChange={(e) => setNewTasks(e.target.value)}
 					/>
-					<button onClick={addTareas}>Add Task</button>
-					{tareas.map((tarea, index) => (
+					<button onClick={addTasks}>Add Task</button>
+					{tasks.map((tasks, index) => (
 					<li key={index}>
 						<input
 						type="checkbox"
-						checked={tarea.completed}
+						checked={tasks.completed}
 						onChange={() => toggleComplete(index)}
 						/>
-						<span className={tarea.completed ? "completed" : ""}>
-						{tarea.text}
+						<span className={tasks.completed ? "completed" : ""}>
+						{tasks.text}
 						</span>
 						<button className="delete-button" onClick={() => removeTarea(index)}>X</button>
 					</li>
 					))}
 				</ul>
+				<p className="counter">Uncompleted Tasks: {tasks.length}</p>
 			</div>
 		</div>
 	);
