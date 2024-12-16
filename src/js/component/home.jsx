@@ -18,7 +18,7 @@ const Home = () => {
 		};
 	};
 
-	const toggleComplete = (index) => {
+	const taskComplete = (index) => {
 		const updatedTasks = [...tasks];
 		updatedTasks[index].completed = !updatedTasks[index].completed;
 		setTasks(updatedTasks);
@@ -45,7 +45,7 @@ const Home = () => {
 						<input
 						type="checkbox"
 						checked={tasks.completed}
-						onChange={() => toggleComplete(index)}
+						onChange={() => taskComplete(index)}
 						/>
 						<span className={tasks.completed ? "completed" : ""}>
 						{tasks.text}
